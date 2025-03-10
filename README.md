@@ -15,3 +15,29 @@ sam deploy --template-file  pavan-sam.yml --stack-name pavan-sam-rest-api --regi
 ```
 sam logs -n GetUser --stack-name pavan-sam-rest-api --region us-east-2 --tail
 ```
+
+
+### Http Methods | perform using postmap
+#### Post Methods to add user in dynamodb table
+```
+https://7akb35nnne.execute-api.us-east-2.amazonaws.com/Prod/user/pavan
+```
+##### add body data
+```
+{
+    "firstName": "pavan",
+    "lastName": "patel",
+    "email" : "xyz@email.com",
+    "website" : "aws.com"
+}
+```
+
+### get Methods to get user from dynamodb table
+```
+https://7akb35nnne.execute-api.us-east-2.amazonaws.com/Prod/user/pavan
+```
+
+### delete Methods to delete user from dynamodb table
+```
+https://7akb35nnne.execute-api.us-east-2.amazonaws.com/Prod/user/pavan
+```
