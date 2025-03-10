@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: REST API using SAM
+Globals:
+  Function:
+    Environment:
+      Variables:
+        TABLE_NAME:
+          Ref: Table
+    MemorySize: 128
+    Runtime: nodejs8.10
+    Timeout: 5
+Resources:
+  DeleteUser:
+    Properties:
+      CodeUri: s3://riyaz-sam/6575dc2d3fb3ada0077b6ea174cd513e
+      Events:
+        GetUser:
+          Properties:
+            Method: delete
+            Path: /user/{userid}
+          Type: Api
+      Handler: delete.handler
+      Policies: AmazonDynamoDBFullAccess
+    Type: AWS::Serverless::Function
+  GetUser:
+    Properties:
+      CodeUri: s3://riyaz-sam/6575dc2d3fb3ada0077b6ea174cd513e
+      Events:
+        GetUser:
+          Properties:
+            Method: get
+            Path: /user/{userid}
+          Type: Api
+      Handler: get.handler
+      Policies: AmazonDynamoDBReadOnlyAccess
+    Type: AWS::Serverless::Function
+  PostUser:
+    Properties:
+      CodeUri: s3://riyaz-sam/6575dc2d3fb3ada0077b6ea174cd513e
+      Events:
+        GetUser:
+          Properties:
+            Method: post
+            Path: /user/{userid}
+          Type: Api
+      Handler: post.handler
+      Policies: AmazonDynamoDBFullAccess
+    Type: AWS::Serverless::Function
+  Table:
+    Properties:
+      PrimaryKey:
+        Name: userid
+        Type: String
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+    Type: AWS::Serverless::SimpleTable
+Transform: AWS::Serverless-2016-10-31
